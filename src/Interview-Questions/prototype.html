@@ -1,0 +1,77 @@
+In JavaScript, **prototypes** are the mechanism by which objects can inherit properties and methods from other objects. Every JavaScript object has an internal property called `[[Prototype]]`, which points to another object (its prototype). This allows objects to share common functionality without duplicating the logic in every instance.
+
+### **Object Prototype Basics**:
+- When a property or method is accessed on an object, JavaScript first checks if that property exists on the object itself.
+- If not, it looks at the object's prototype, and continues the search up the prototype chain until it finds the property or reaches the end of the chain (`null`).
+  
+This behavior is called **prototypal inheritance**.
+
+### **How Prototypal Inheritance Works**:
+If an object doesn’t have its own property or method, it looks up the prototype chain to see if it can inherit the behavior.
+
+For example:
+
+```javascript
+const person = {
+  greet: function() {
+    console.log("Hello!");
+  }
+};
+
+const user = Object.create(person); // user inherits from person
+user.greet(); // Outputs: "Hello!"
+```
+
+In this case:
+- `user` doesn't have its own `greet` method.
+- The interpreter looks for the `greet` method in `person`, which is the prototype of `user`.
+- As a result, `user` can call `greet` even though it doesn't own it.
+
+### **Prototype vs `__proto__` vs `prototype`**:
+1. **`[[Prototype]]`**: The internal property that points to an object’s prototype. In most engines, it's accessed via `__proto__` (though not recommended for production use).
+   
+2. **`Object.prototype`**: The object that is the prototype of all objects. Methods like `toString()` and `hasOwnProperty()` are part of `Object.prototype`, so every object has access to them.
+
+3. **`prototype`**: Only exists on functions (not objects) and is used when creating new objects using constructor functions. This defines the prototype for all instances created by a constructor.
+
+### **Example Using Constructor Functions**:
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function() {
+  console.log("Hello, " + this.name);
+};
+
+const user1 = new Person("Alice");
+const user2 = new Person("Bob");
+
+user1.greet(); // Outputs: Hello, Alice
+user2.greet(); // Outputs: Hello, Bob
+```
+
+In this case:
+- The `greet` method is defined on `Person.prototype`, so both `user1` and `user2` inherit and can use it.
+  
+### **Prototypal Chain**:
+If you try to access a property on an object and it doesn’t exist, JavaScript will check the object's prototype, and then that prototype’s prototype, and so on, until `Object.prototype` is reached or `null` is found.
+
+Example:
+
+```javascript
+const animal = { eats: true };
+const dog = Object.create(animal); // dog inherits from animal
+console.log(dog.eats); // Outputs: true, found in animal
+```
+
+### **Advantages of Prototypal Inheritance**:
+- **Memory Efficiency**: Methods are shared between instances, avoiding duplication.
+- **Dynamic**: You can modify prototypes at runtime, and the change will reflect across all objects that inherit from it.
+
+### **Summary**:
+- **Prototype** is a core concept in JavaScript that allows for inheritance between objects.
+- Each object has a `[[Prototype]]` that links to another object, enabling property and method sharing.
+- The **prototype chain** is followed when JavaScript looks up properties or methods.
+- Constructor functions and `Object.create` are common ways to set up inheritance.
