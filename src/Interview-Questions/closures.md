@@ -3,6 +3,18 @@
 ### How Closures Work:
 When a function is created, it has access to its own variables, the variables in its parent function, and the global variables. Even after the parent function returns, the inner function retains access to the variables from the parent’s scope.
 
+``` function outerFun(a1){
+  let a3 = a1
+  return function innerFunction(a2){
+      console.log(a1 + a2)
+      // console.log(a2)
+  }
+}
+const a1 = 10 
+const a2 =20
+const ot = outerFun(a1)
+ot(a2) ```
+
 ### Example:
 
 ```javascript

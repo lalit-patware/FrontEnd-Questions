@@ -1,18 +1,14 @@
-const CycleCal = (str) =>{
-    if(str === '') return "";
-    let result = ''
-    let count = 1
-
-    for(let i=0; i < str.length; i++){
-        if(str[i] === str[i+1]){
-            count++;
-        }
-        else {
-            result += str[i]+ count
-            count = 1
-        }
-    }
-    return result;
+// 6.    Frequency of Elements
+// Write a program to count the frequency of each element in an array. Example:
+const input= [1, 9, 6, 3, 4, 4, 2,0,4,1,6,3,9] // 'qqqqaaabvvcvaaaa'
+// Output: 1: 1, 2: 2, 3: 1, 4: 3
+function freqOfEle(arr){
+ let freqObj={}
+ for(let i=0; i<arr.length; i++){
+   freqObj[arr[i]] = (freqObj[arr[i]] || 0) + 1
+ }
+ return freqObj
+//  return Object.entries(freqObj).map(([key, value]) => `${key}: ${value}`).join(', ')
 }
 
-export default CycleCal
+console.log(freqOfEle(input))

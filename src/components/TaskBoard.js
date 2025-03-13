@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-// import '../styles/Taskboard.css';
+import React, { useState, useEffect } from 'react';
+import '../styles/Taskboard.css';
 
 export const TaskBoard = () => {
+    const [draggableId, setDraggableId] = useState(null)
     const [tasks, setTasks] = useState([
         { id: 1, title: 'Design wireframes', status: 'Todo' },
         { id: 2, title: 'Set up project repo', status: 'In Progress' },
@@ -13,24 +14,20 @@ export const TaskBoard = () => {
 
     const statuses = ['Todo', 'In Progress', 'Completed'];
 
-    const onDragStart = (e, taskId) => {
-        e.dataTransfer.setData('taskId', taskId);
+    const onDragStart = (taskId) => {
+        setDraggableId(taskId)
     };
 
-    const onDrop = (e, newStatus) => {
-        const taskId = e.dataTransfer.getData('taskId');
+    const onDrop = (newStatus) => {
         setTasks((prevTasks) =>
             prevTasks.map((task) =>
-                task.id === parseInt(taskId) ? { ...task, status: newStatus } : task
+                task.id === draggableId ? { ...task, status: newStatus } : task
             )
         );
     };
-
-    const onDragOver = (e) => {
-        e.preventDefault(); // Necessary to allow dropping
-    };
-
+   
     return (
+
         <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -40,23 +37,31 @@ export const TaskBoard = () => {
                 <div
                     key={status}
                     //   className="task-column"
-                    onDragOver={onDragOver}
-                    onDrop={(e) => onDrop(e, status)}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={() => onDrop(status)}
                 >
                     <h2>{status}</h2>
-                    <ul>
+                    <ul style={{listStyle: 'none'}}>
                         {tasks
                             .filter((task) => task.status === status)
                             .map((task) => (
                                 <li
                                     key={task.id}
                                     //   className="task-item"
-                                    style={{
-                                        cursor: 'grab',
-                                        listStyle: 'none'
-                                    }}
+                                    // style={{
+                                    //     cursor: 'grab',
+                                    //     listStyle: 'none',
+                                    //     backgroundColor: '#4CAF50', /* Green background */
+                                    //     color: 'white', /* White text */
+                                    //     padding: '10px 20px', /* Padding */
+                                    //     margin: '10px',
+                                    //     fontSize: '16px', /* Font size */
+                                    //     border: 'none', /* Remove border */
+                                    //     borderRadius: '5px' /* Rounded corners */
+                                    //     //   transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+                                    // }}
                                     draggable
-                                    onDragStart={(e) => onDragStart(e, task.id)}
+                                    onDragStart={()=> onDragStart(task.id)}
                                 >
                                     {task.title}
                                 </li>
@@ -68,4 +73,4 @@ export const TaskBoard = () => {
     );
 };
 
-// export default TaskBoard;
+export default TaskBoard;

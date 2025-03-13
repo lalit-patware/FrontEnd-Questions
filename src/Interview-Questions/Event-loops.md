@@ -3,7 +3,7 @@
 JavaScript is single-threaded, meaning it can only execute one task at a time in the main thread. However, JavaScript can handle asynchronous operations (like I/O operations, HTTP requests, and timers) using a mechanism called the **Event Loop**.
 
 The event loop continuously checks whether the call stack is empty and whether there are any pending callbacks waiting in the task queues. It coordinates between the call stack and task queues to manage asynchronous operations.
-
+https://www.lydiahallie.com/blog/event-loop?ref=dailydev
 ### **Key Concepts:**
 
 1. **Call Stack:**
@@ -49,6 +49,27 @@ Promise.resolve().then(() => {
 });
 
 console.log('End');  // 2nd: Synchronous code
+
+
+// setTimeout(() => {
+
+//   console.log('Timeout'); 4
+
+// }, 0);
+
+// new Promise((resolve, reject) => {
+
+//   console.log('Promise executor');  1
+
+//   resolve();
+
+// }).then(() => {
+
+//   console.log('Promise resolved'); 3
+
+// });
+
+// console.log('End'); 2
 ```
 
 **Output:**

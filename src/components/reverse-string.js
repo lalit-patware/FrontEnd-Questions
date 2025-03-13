@@ -7,6 +7,7 @@ function reverseWordsInPlace(input) {
     
     // Join the reversed words with spaces and return the result
     return reversedWords.join(' ');
+    // return [...str].reverse().join('');
   }
   
   // Test the function

@@ -44,9 +44,9 @@ Here, `expensiveCalculation` will only be called when `num` changes, not on ever
 #### Usage:
 ```javascript
 const MyComponent = () => {
-    const [count, setCount] = React.useState(0);
+    const [count, setCount] = useState(0);
 
-    const increment = React.useCallback(() => {
+    const increment = useCallback(() => {
         setCount((prevCount) => prevCount + 1);
     }, []);
 

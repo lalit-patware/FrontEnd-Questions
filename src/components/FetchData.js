@@ -8,20 +8,20 @@ const DisplayTodo = () => {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-                const data = await response.json();
-                setTodo(data);
-            }
-            catch (error) {
-                setError(error.message)
-            }finally {
-                setLoading(false);
-            }
+        // const fetchData = async () => {
+        //     try {
+        //         const response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+        //         const data = await response.json();
+        //         setTodo(data);
+        //     }
+        //     catch (error) {
+        //         setError(error.message)
+        //     }finally {
+        //         setLoading(false);
+        //     }
 
-        }
-        fetchData()
+        // }
+        // fetchData()
     }, []) // Empty dependency array ensures useEffect runs only once after the initial render
     // const objArr = [
     //     { name: 'abc', score: 20 },

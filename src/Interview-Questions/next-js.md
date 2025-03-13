@@ -1,0 +1,1 @@
+What is Server-Side Rendering (SSR) in Next.js? How does it differ from Static Site Generation (SSG)?

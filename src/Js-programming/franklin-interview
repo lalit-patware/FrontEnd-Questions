@@ -1,0 +1,97 @@
+const categories = {
+  "fruits": ["apple", "banana", "cherry", "mango"],
+  "animals": ["dog", "cat", "elephant", "lion"],
+  "countries": ["india", "usa", "brazil", "canada"]
+};
+
+const data = [
+  "I love apple and dog.", 
+  "mango is my favorite fruit!",
+  "I saw a lion in India.",
+  "The cat  jumped over the moon."
+];
+
+// Find total count of categorized words .....(0:2,) ?
+// Most frequent word in each category (if applicable) ? 
+
+// Function to count occurrences
+const countCategorizedWords = (categories, data) => {
+  const categoryCount = {};
+  const mostFrequentWord = {};
+
+  // Initialize counters for each category
+  for (const category of Object.keys(categories)) {
+    categoryCount[category] = {};
+  }
+
+  for (const sentence of data) {
+    const words = sentence.toLowerCase().split(/\s+/); // Extract words
+
+    for (const word of words) {
+      for (const [category, wordsList] of Object.entries(categories)) {
+        if (wordsList.includes(word)) {
+          categoryCount[category][word] = (categoryCount[category][word] || 0) + 1;
+        }
+      }
+    }
+  }
+
+  // Find most frequent word in each category
+  for (const [category, wordsMap] of Object.entries(categoryCount)) {
+    const mostFrequent = Object.entries(wordsMap).sort((a, b) => b[1] - a[1])[0];
+    mostFrequentWord[category] = mostFrequent ? mostFrequent[0] : null;
+  }
+
+  return { categoryCount, mostFrequentWord };
+};
+
+// 2nd approach
+
+const countCategorizedWords1 = (categories, data) => {
+  const categoryCount = {};
+  const mostFrequentWord = {};
+
+  // Initialize counters for each category
+  const categoryKeys = Object.keys(categories);
+  for (let i = 0; i < categoryKeys.length; i++) {
+    categoryCount[categoryKeys[i]] = {};
+  }
+
+  // Iterate through sentences
+  for (let i = 0; i < data.length; i++) {
+    const words = data[i].toLowerCase().split(/\s+/); // Extract words
+
+    if (!words) continue; // Skip if no words found
+
+    // Iterate through words
+    for (let j = 0; j < words.length; j++) {
+      const word = words[j];
+
+      // Iterate through categories
+      for (let k = 0; k < categoryKeys.length; k++) {
+        const category = categoryKeys[k];
+
+        if (categories[category].includes(word)) {
+          categoryCount[category][word] = (categoryCount[category][word] || 0) + 1;
+        }
+      }
+    }
+  }
+
+  // Find the most frequent word in each category
+  for (let i = 0; i < categoryKeys.length; i++) {
+    const category = categoryKeys[i];
+    const wordsMap = categoryCount[category];
+    const sortedWords = Object.entries(wordsMap).sort((a, b) => b[1] - a[1]);
+
+    mostFrequentWord[category] = sortedWords.length > 0 ? sortedWords[0][0] : null;
+  }
+
+  return { categoryCount, mostFrequentWord };
+};
+
+
+const result = countCategorizedWords(categories, data);
+
+console.log("Total Count of Categorized Words:", result.categoryCount);
+console.log("Most Frequent Word in Each Category:", result.mostFrequentWord);

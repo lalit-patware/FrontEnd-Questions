@@ -8,7 +8,7 @@ const InfiniteScrollUsersList = () => {
   const usersPerPage = 10; // Number of users to fetch per request
 
   const fetchUsers = async (page) => {
-    setLoading(true);
+    // setLoading(true);
     try {
       const response = await fetch(`https://api.github.com/users?per_page=${usersPerPage}&page=${page}`);
       if (!response.ok) {
